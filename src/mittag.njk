@@ -1,0 +1,40 @@
+---
+title: "Overview of Mittag"
+layout: base.njk
+---
+
+<h1>Coconat Mittagstisch</h1>
+<table class="menu">
+    <tr><td>
+
+        {% for day in mittagsplan %}
+        {% set tag = day.tag%}
+        
+          <h2>📅 {{tag  |  parseDate }}</h2>
+          <table class="menu-day">
+            {% if day.gericht %}
+              <tr>
+                <td class="highlight">🍔 Gericht</td><td>{{day.gericht}}</td>
+            </tr>
+            {% endif %}
+            {% if day.sauce %}
+                <tr>
+                    <td class="highlight">🥫 Sauce</td><td>{{day.sauce}}</td>
+                </tr>
+                {% endif %}
+            {% if day.beilage %}
+                <tr>
+                    <td class="highlight">🥗 Beilage</td><td>{{day.beilage}}</td>
+                </tr>
+                {% endif %}
+            {% if day.dessert %}
+                <tr>
+                <td class="highlight">🍰 Dessert</td><td>{{day.dessert}}</td>
+        
+              </tr>
+            {% endif %}
+          </table>
+        {% endfor %}
+    </td></tr>
+
+</table>
