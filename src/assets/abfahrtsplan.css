@@ -6,7 +6,7 @@
 
   .departure {
     background: white;
-    border-left: 4px solid #007bff;
+    border-left: 4px solid #993399;
     padding: 1rem;
     margin: 1rem 0;
     border-radius: 8px;
@@ -40,4 +40,8 @@
       background: #f9f9f9;
       padding: 2rem;
       color: #333;
+  }
+  .abfahrtstafel .remarks{
+    color: #666;
+    font-size: 0.8rem;
   }
