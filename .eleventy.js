@@ -1,6 +1,7 @@
 module.exports = function (eleventyConfig) {
     // Set input and output directories
 // Copy static files
+eleventyConfig.addPassthroughCopy("src/assets");
 eleventyConfig.addPassthroughCopy("src/styles.css");
 eleventyConfig.addPassthroughCopy("src/icons"); // If you have icons
 eleventyConfig.addPassthroughCopy("src/manifest.json"); // PWA support
