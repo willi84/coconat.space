@@ -22,6 +22,17 @@ eleventyConfig.addFilter("parseDate", (dateString) => {
   });
   // return date.toISOString().split("T")[0]; // Format YYYY-MM-DD
 });
+eleventyConfig.addFilter("parseDateFull", (dateString) => {
+  if(dateString === undefined) return "Invalid   Date";
+  const matches = dateString.match(/\d+/g);
+  if (!matches) return "Invalid Date";
+
+  const [year, month, day] = matches.map(Number);
+  const date = new Date(year, month, day);
+  const dateItem = date.toISOString().split("T")
+  // German date
+  return dateItem[0] + '-' + dateItem[1].replace(/\.\d*Z/, ''); // Format YYYY-MM-DD
+});
 
 
     return {

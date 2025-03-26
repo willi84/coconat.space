@@ -5,6 +5,6 @@ layout: raw.njk
 {% set data = mittagsplan %}
 {
     {%- if data -%}
-    "data": {{ data | dump | safe }},
+    "data": {{ data | dump | safe }}
   {%- endif -%}
 }

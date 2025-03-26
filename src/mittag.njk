@@ -4,6 +4,7 @@ layout: base.njk
 ---
 {% set items = mittagsplan.items%}
 <h1>Coconat Mittagstisch</h1>
+<p><small>generated at {{mittagsplan.generatedAt | parseDateFull}}</small></p>
 <table class="menu">
     <tr><td>
 
