@@ -2,39 +2,49 @@
 title: "Overview of Mittag"
 layout: base.njk
 ---
-
+{% set items = mittagsplan.items%}
 <h1>Coconat Mittagstisch</h1>
 <table class="menu">
     <tr><td>
 
-        {% for day in mittagsplan %}
-        {% set tag = day.tag%}
-        
-          <h2>📅 {{tag  |  parseDate }}</h2>
-          <table class="menu-day">
-            {% if day.gericht %}
+      {% for day, item in items %}
+      <h2>📅 {{day  |  parseDate }}</h2>
+      {% if item.mittag%}
+        <h3>Mittagstisch</h3>
+        <table class="menu-day">
+          {% if item.mittag %}
+            <tr>
+              <td class="highlight">🍔 Gericht</td><td>{{item.mittag.menu}}</td>
+          </tr>
+          {% endif %}
+          {% if item.mittag.chef %}
               <tr>
-                <td class="highlight">🍔 Gericht</td><td>{{day.gericht}}</td>
-            </tr>
-            {% endif %}
-            {% if day.sauce %}
-                <tr>
-                    <td class="highlight">🥫 Sauce</td><td>{{day.sauce}}</td>
-                </tr>
-                {% endif %}
-            {% if day.beilage %}
-                <tr>
-                    <td class="highlight">🥗 Beilage</td><td>{{day.beilage}}</td>
-                </tr>
-                {% endif %}
-            {% if day.dessert %}
-                <tr>
-                <td class="highlight">🍰 Dessert</td><td>{{day.dessert}}</td>
-        
+                  <td class="highlight">👨‍🍳 KöchIn</td><td>{{item.mittag.chef}}</td>
               </tr>
-            {% endif %}
-          </table>
-        {% endfor %}
+          {% endif %}
+        
+        </table>
+      {% endif %}
+      {% if item.mittag%}
+        <h3>Abendbrot</h3>
+        <table class="menu-day">
+          {% if item.abend %}
+            <tr>
+              <td class="highlight">🍔 Gericht</td><td>{{item.abend.menu}}</td>
+          </tr>
+          {% endif %}
+          {% if item.abend.chef %}
+              <tr>
+                  <td class="highlight">👨‍🍳 KöchIn</td><td>{{item.abend.chef}}</td>
+              </tr>
+          {% endif %}
+        
+        </table>
+      {% endif %}
+  {# {% if date == "2024-03-25" %} #}
+  {# {% endif %} #}
+{% endfor %}
+   
     </td></tr>
 
 </table>

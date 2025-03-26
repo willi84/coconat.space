@@ -1,0 +1,10 @@
+---
+permalink: "/api/dashboard.json"
+layout: raw.njk
+---
+{% set data = get_abfahrtstafel %}
+{
+    {%- if data -%}
+    "data": {{ data | dump | safe }}
+  {%- endif -%}
+}

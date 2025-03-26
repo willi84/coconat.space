@@ -34,12 +34,16 @@ async function fetchDeparturesForDay(dateISO) {
   const url = `https://v6.vbb.transport.rest/stops/${stopId}/departures?duration=1440&date=${dateISO}&results=100`;
   const res = await fetch(url);
   const data = await res.json();
+  console.log(data)
   return data.departures || [];
 }
 
 async function loadDepartures() {
   const monitor = document.getElementById('monitor');
   monitor.innerHTML = '⏳ Lade Abfahrten...';
+  const apiResponse = await fetch('/api/dashboard.json')
+  console.log(apiResponse)
+  console.log(await apiResponse.json())
 
   try {
     const todayDeps = await fetchDeparturesForDay(getTodayISO());
@@ -74,15 +78,15 @@ async function loadDepartures() {
       const info = document.createElement('div');
       info.className = 'info';
 
-      // Zeitberechnung für Reservierung
+      // Zeitberechnung für Anmeldung
       const deadline = planned.getTime() - 60 * 60 * 1000; // 60 Minuten vor Abfahrt
       const minutesLeft = Math.floor((deadline - current) / 1000 / 60);
       const hoursLeft = Math.floor(minutesLeft / 60);
       const timeLeftDisplay = minutesLeft > 60
-        ? `noch <strong>${hoursLeft}h ${minutesLeft - hoursLeft * 60} Min</strong> Zeit für Reservierung`
+        ? `noch <strong>${hoursLeft}h ${minutesLeft - hoursLeft * 60} Min</strong> Zeit für Anmeldung`
         : minutesLeft > 0
-        ? `noch <strong>${minutesLeft} Min</strong> Zeit für Reservierung`
-        : "keine Reservierung mehr möglich";
+        ? `noch <strong>${minutesLeft} Min</strong> Zeit für Anmeldung`
+        : "keine Anmeldung mehr möglich";
 
       const colorTimeLeft = minutesLeft > 120
         ? "green"
@@ -97,7 +101,7 @@ async function loadDepartures() {
       const finalRemarks = `
         ${isBuergerbus ? `
           <br>❤️ Bürgerbus;
-          <br />📞 Reservierungspflicht${hotlineText}
+          <br />📞 Anmeldungspflicht${hotlineText}
           <br />⌛ <em style="color:${colorTimeLeft};">${timeLeftDisplay}</em>
         ` : ""}
       `;
