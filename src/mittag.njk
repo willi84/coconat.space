@@ -9,7 +9,7 @@ layout: base.njk
     <tr><td>
 
       {% for day, item in items %}
-      <h2>📅 {{day  |  parseDate }}</h2>
+      <h2>📅  {{day  |  parseDate }}</h2>
       {% if item.mittag%}
         <h3>Mittagstisch</h3>
         <table class="menu-day">
