@@ -33,7 +33,7 @@ jobs:
         run: npm ci
 
       - name: 🍔 Generate mittagsplan data
-        run: node scripts/generate-mittagsplan.js > mittagsplan-latest.json
+        run: node scripts/generate-mittagsplan.js
 
       - name: Checkout coconat-data repo
         uses: actions/checkout@v3
