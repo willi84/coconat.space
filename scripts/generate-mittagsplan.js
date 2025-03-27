@@ -6,10 +6,13 @@ const mittagsplan = require('../src/_data/mittagsplan');
     const data = await mittagsplan();
 
     // Properly format the data as JSON with indentation
-    const formattedData = JSON.stringify(data, null, 2);
+    // const formattedData = JSON.stringify(data, null, 2);
+    const json = {
+        data: data
+    }
 
     // Write the formatted data to a JSON file
-    fs.writeFileSync('mittagsplan-latest.json', formattedData);
+    fs.writeFileSync('mittagsplan-latest.json', data);
 
     // Optionally log the formatted data to console for debugging purposes
     console.log('Mittagsplan data generated successfully.');
