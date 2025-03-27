@@ -12,7 +12,7 @@ const mittagsplan = require('../src/_data/mittagsplan');
     }
 
     // Write the formatted data to a JSON file
-    fs.writeFileSync('mittagsplan-latest.json', JSON.stringify(data));
+    fs.writeFileSync('mittagsplan-latest.json', JSON.stringify(json));
 
     // Optionally log the formatted data to console for debugging purposes
     console.log('Mittagsplan data generated successfully.');
