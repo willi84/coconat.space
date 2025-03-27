@@ -8,6 +8,9 @@ on:
       custom-message:
         description: "Optional commit message"
         required: false
+  push:
+    branches:
+      - main  # Run whenever code is pushed to main
 
 jobs:
   update-mittagsplan:
@@ -51,11 +54,11 @@ jobs:
           else
             git add mittagsplan/latest.json
 
-            # Time
+            # Time info
             TIME=$(date +"%H:%M:%S")
             DATE=$(date +"%Y-%m-%d")
 
-            # Trigger Type
+            # Determine trigger type
             if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
               LABEL="manually triggered"
               EMOJI="♻️"
@@ -65,6 +68,11 @@ jobs:
               else
                 CUSTOM=" $EMOJI"
               fi
+              SUFFIX=""
+            elif [ "${{ github.event_name }}" = "push" ]; then
+              LABEL="code push triggered"
+              EMOJI="🚀"
+              CUSTOM=""
               SUFFIX=""
             else
               LABEL="🤖 automated"
@@ -76,4 +84,3 @@ jobs:
 
             git commit -m "$COMMIT_MESSAGE"
             git push
-          fi
