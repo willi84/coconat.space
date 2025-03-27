@@ -4,6 +4,7 @@ const floorplan = require('../src/_data/floorplan');
 (async () => {
   try {
     const data = await floorplan();
+    console.log(data);
 
     // Write the formatted data to a JSON file
     fs.writeFileSync('floorplan-latest.json', JSON.stringify(data));
