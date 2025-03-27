@@ -1,0 +1,79 @@
+name: Update Mittagsplan in coconat-data
+
+on:
+  schedule:
+    - cron: "0 * * * *" # every hour
+  workflow_dispatch:
+    inputs:
+      custom-message:
+        description: "Optional commit message"
+        required: false
+
+jobs:
+  update-mittagsplan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout current repo
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: 🍔 Generate mittagsplan data
+        run: node scripts/generate-mittagsplan.js > mittagsplan-latest.json
+
+      - name: Checkout coconat-data repo
+        uses: actions/checkout@v3
+        with:
+          repository: willi84/coconat-data
+          token: ${{ secrets.DATA_REPO_TOKEN }}
+          path: data-repo
+
+      - name: Copy latest.json to target path
+        run: |
+          mkdir -p data-repo/mittagsplan
+          cp mittagsplan-latest.json data-repo/mittagsplan/latest.json
+
+      - name: Commit & push if changed
+        run: |
+          cd data-repo
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+
+          if git diff --quiet && git diff --cached --quiet; then
+            echo "No changes – skipping commit."
+          else
+            git add mittagsplan/latest.json
+
+            # Time
+            TIME=$(date +"%H:%M:%S")
+            DATE=$(date +"%Y-%m-%d")
+
+            # Trigger Type
+            if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+              LABEL="manually triggered"
+              EMOJI="♻️"
+              CUSTOM="${{ github.event.inputs.custom-message }}"
+              if [ -n "$CUSTOM" ]; then
+                CUSTOM=" $EMOJI $CUSTOM"
+              else
+                CUSTOM=" $EMOJI"
+              fi
+              SUFFIX=""
+            else
+              LABEL="🤖 automated"
+              CUSTOM=""
+              SUFFIX=" [bot]"
+            fi
+
+            COMMIT_MESSAGE="update (mittagsplan): $LABEL on $TIME [$DATE]$CUSTOM$SUFFIX"
+
+            git commit -m "$COMMIT_MESSAGE"
+            git push
+          fi
