@@ -11,6 +11,10 @@ on:
   push:
     branches:
       - main  # Run whenever code is pushed to main
+    paths:
+      - '.github/**'   # Trigger on changes in .github folder (workflow, actions, etc.)
+      - 'src/**'        # Trigger on changes in the src directory
+      - 'scripts/**'    # Trigger on changes in the scripts directory
 
 jobs:
   update-mittagsplan:
