@@ -1,14 +1,9 @@
 const fetch = require("node-fetch");
 // import fetch from 'node-fetch';
+const DOCUMENT_ID = "1ckZeIuqh3ht5XtrcQpalNmYtXwPFoVQb9uXbAw5Mimc";
+const { getDataBySheetName } = require('../_shared/google_sheets');
 
-const getDataBySheetName = async (sheetName) => {
-    const url = `https://docs.google.com/spreadsheets/d/1ckZeIuqh3ht5XtrcQpalNmYtXwPFoVQb9uXbAw5Mimc/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
-    const response = await fetch(url);
-    const text = await response.text();
-    const jsonText = text.match(/\{.*\}/s)[0];
-    const data = JSON.parse(jsonText);
-    return data;
-}
+
 const normalizeMenuData = (menu) => {
     const input = menu.replace(/\s+/g, ' ').trim();
     let data = input; 
@@ -90,7 +85,7 @@ const getDataBySheet = async (sheetName, allData, offset) => {
 }
 const getGlobalData = async () => {
     const sheetNameGlobal = "global"; // 👈 use the actual tab name of the 2nd shee
-    const globalData = await getDataBySheetName(sheetNameGlobal);
+    const globalData = await getDataBySheetName(DOCUMENT_ID, sheetNameGlobal);
     const data = {};
     for(const col of globalData.table.rows) {
         data[col.c[0].v] = col.c[1].v;

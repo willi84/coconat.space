@@ -4,3 +4,5 @@ coverage
 _site
 .vscode
 mittagsplan-latest.json
+floorplan-latest.json
+abfahrtstafe-latest.json

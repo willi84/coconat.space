@@ -1,0 +1,92 @@
+name: Update floorplan in coconat-data
+
+on:
+  schedule:
+    - cron: "0 * * * *" # every hour
+  workflow_dispatch:
+    inputs:
+      custom-message:
+        description: "Optional commit message"
+        required: false
+  push:
+    branches:
+      - main  # Run whenever code is pushed to main
+    paths:
+      - '.github/**'   # Trigger on changes in .github folder (workflow, actions, etc.)
+      - 'src/**'        # Trigger on changes in the src directory
+      - 'scripts/**'    # Trigger on changes in the scripts directory
+
+jobs:
+  update-floorplan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout current repo
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: 🚪 Generate floorplan data
+        run: node scripts/generate-floorplan.js
+
+      - name: Checkout coconat-data repo
+        uses: actions/checkout@v3
+        with:
+          repository: willi84/coconat-data
+          token: ${{ secrets.DATA_REPO_TOKEN }}
+          path: data-repo
+
+      - name: Copy latest.json to target path
+        run: |
+          mkdir -p data-repo/floorplan
+          cp floorplan-latest.json data-repo/floorplan/latest.json
+
+      - name: Commit & push if changed
+        run: |
+          cd data-repo
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+
+          if git diff --quiet && git diff --cached --quiet; then
+            echo "No changes – skipping commit."
+          else
+            git add floorplan/latest.json
+
+            # Time info
+            TIME=$(date +"%H:%M:%S")
+            DATE=$(date +"%Y-%m-%d")
+
+            # Determine trigger type
+            if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+              LABEL="manually triggered"
+              EMOJI="♻️"
+              CUSTOM="${{ github.event.inputs.custom-message }}"
+              if [ -n "$CUSTOM" ]; then
+                CUSTOM=" $EMOJI $CUSTOM"
+              else
+                CUSTOM=" $EMOJI"
+              fi
+              SUFFIX=""
+            elif [ "${{ github.event_name }}" = "push" ]; then
+              LABEL="code push triggered"
+              EMOJI="🚀"
+              CUSTOM=""
+              SUFFIX=""
+            else
+              LABEL="🤖 automated"
+              CUSTOM=""
+              SUFFIX=" [bot]"
+            fi
+
+            # Final commit message
+            COMMIT_MESSAGE="update (floorplan): $LABEL on $TIME [$DATE]$CUSTOM$SUFFIX"
+
+            git commit -m "$COMMIT_MESSAGE"
+            git push
+          fi
