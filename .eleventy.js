@@ -27,6 +27,8 @@ eleventyConfig.addFilter("parseDate", (dateString) => {
   });
   // return date.toISOString().split("T")[0]; // Format YYYY-MM-DD
 });
+  eleventyConfig.addFilter("keys", obj => Object.keys(obj));
+
 // check if date is today
 eleventyConfig.addFilter("isToday", (dateString) => {
   // use german time zone
