@@ -54,3 +54,15 @@ td.highlight {
 .mt-50 {
     margin-top: 50px;
 }
+
+.icon-sm {
+    width: 20px;
+    height: 20px;
+  }
+  .raspberry {
+    display: none;
+  }
+
+  .client-is-pi .raspberry {
+    display: inline-block;
+  }

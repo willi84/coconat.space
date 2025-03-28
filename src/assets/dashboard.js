@@ -147,7 +147,7 @@ document.onreadystatechange = function () {
     startCountdown();
     loadDepartures();
   }
-  const isRaspberryPi = navigator.userAgent.includes("Linux arm") || navigator.userAgent.includes("RaspberryPi");
+  const isRaspberryPi = navigator.userAgent.includes("RaspberryPi");
   
   document.getElementById('client').textContent = navigator.userAgent;
   document.getElementById('raspberry').textContent = isRaspberryPi;
