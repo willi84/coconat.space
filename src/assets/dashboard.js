@@ -148,3 +148,4 @@ document.onreadystatechange = function () {
     loadDepartures();
   }
 };
+

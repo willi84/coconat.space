@@ -41,11 +41,11 @@ button:disabled {
     background-color: #f1f5ef;
 }
 td.highlight {
-    background-color: #9bb449
+    background-color: #eaeedd
 }
-.menu{
+/* .menu{
     background-color: #f8e7a4;
-}
+} */
 .menu td {
     padding: 10px;
     border: 1px solid #f1f5ef;
