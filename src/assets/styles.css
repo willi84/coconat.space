@@ -66,3 +66,15 @@ td.highlight {
   .client-is-pi .raspberry {
     display: inline-block;
   }
+
+.pax{
+    width: 100%;
+    text-align: right;
+}
+.pax-item{
+    display: inline;
+    width: 15px;
+    height: 15px;
+    margin: 0;
+    padding: 0;
+}

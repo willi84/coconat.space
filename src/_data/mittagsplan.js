@@ -59,6 +59,7 @@ const getDataBySheet = async (sheetName, allData, offset) => {
         const indexMenu = columnNames.indexOf("menu");
         const indexType = columnNames.indexOf("type");
         const indexChef = columnNames.indexOf("chef");
+        const indexPax = columnNames.indexOf("pax");
 
         const hasMenu = row.c[indexMenu]?.v;
         const day = isDay ? firstCell : previousDay;
@@ -76,6 +77,7 @@ const getDataBySheet = async (sheetName, allData, offset) => {
                     type: type,
                     chef: chef,
                     menu: menu,
+                    pax: row.c[indexPax]?.v || 0,
                 }
                 if(!allData[date]) {
                     allData[date] = {};
