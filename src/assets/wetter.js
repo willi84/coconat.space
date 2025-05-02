@@ -175,7 +175,7 @@ async function loadWeather(showSunrises) {
 
     for (let offset = 0; offset <= 3; offset++) {
       const versuch = new Date(startZeit.getTime() + offset * 60 * 60 * 1000);
-      const versuchISO = versuch.toLocaleString("sv-SE", {
+      const versuchISO = versuch.toLocaleString("sv-SE", { // needs for ISO format
         timeZone: "Europe/Berlin",
         hourCycle: "h23",
       }).replace(" ", "T").slice(0, 16);

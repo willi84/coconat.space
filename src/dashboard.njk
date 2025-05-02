@@ -99,7 +99,7 @@ layout: base.njk
                           <tr>
                             <td class="highlight">
                               <small><strong>upcoming </strong></small><br />
-                              <h4 class="mb-2 mt-1">📅  {{day  |  parseDate }}</h4>
+                              <h4 class="mb-2 mt-1">📅 {{day }}</h4>
                               
                                       <strong>🍔 Gericht</strong><br />
                                       {{item.mittag.menu}}<br />
@@ -119,7 +119,7 @@ layout: base.njk
                         {% if day | nextMittag %}
                         {% if item.mittag %}
                         <li>
-                          <strong>📅  {{day  |  parseDate }}</strong><br />
+                          <strong>📅  {{day  }}</strong><br />
                           {{item.mittag.menu}}
                         </li>
                         {% endif %}

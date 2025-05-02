@@ -1,6 +1,10 @@
 const fetch = require("node-fetch");
 // import fetch from 'node-fetch';
-const DOCUMENT_ID = "1ckZeIuqh3ht5XtrcQpalNmYtXwPFoVQb9uXbAw5Mimc";
+const IS_DEV = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'test:dev';
+console.log(`isDev: ${IS_DEV}`);
+const DEFAULT_DOCUMENT_ID = "1ckZeIuqh3ht5XtrcQpalNmYtXwPFoVQb9uXbAw5Mimc";
+const DOCUMENT_ID = '1ckZeIuqh3ht5XtrcQpalNmYtXwPFoVQb9uXbAw5Mimc';
+// const DOCUMENT_ID = IS_DEV ? '1-CZFN69d7Ve2lUefJvLk9QIJZEJBsB4UAbqaHfKFA2U' : '1ckZeIuqh3ht5XtrcQpalNmYtXwPFoVQb9uXbAw5Mimc';
 const { getDataBySheetName } = require('../_shared/google_sheets');
 
 
@@ -29,7 +33,7 @@ const getDataBySheet = async (sheetName, allData, offset) => {
     const monthValue = parseInt(globalData.monthValue, 10);
     const month = offset? monthValue +offset :  monthValue;
     const year = globalData.year;
-    const url = `https://docs.google.com/spreadsheets/d/1ckZeIuqh3ht5XtrcQpalNmYtXwPFoVQb9uXbAw5Mimc/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
+    const url = `https://docs.google.com/spreadsheets/d/${DOCUMENT_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
     const response = await fetch(url);
     const text = await response.text();
 
