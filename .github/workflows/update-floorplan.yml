@@ -89,9 +89,14 @@ jobs:
 
             git commit -m "$COMMIT_MESSAGE"
             git push
+
+            # ✅ Build project after data change
+            echo "🛠️ Building project with updated floorplan..."
+            cd ..
+            npm run build
           fi
-      - name: Build project after floorplan update
-        run: |
-          echo "🛠️ Building project with updated floorplan..."
-          npm run build
+      # - name: Build project after floorplan update
+      #   run: |
+      #     echo "🛠️ Building project with updated floorplan..."
+      #     npm run build
   
