@@ -90,3 +90,8 @@ jobs:
             git commit -m "$COMMIT_MESSAGE"
             git push
           fi
+      - name: Build project after floorplan update
+        run: |
+          echo "🛠️ Building project with updated floorplan..."
+          npm run build
+  
