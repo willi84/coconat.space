@@ -2,11 +2,10 @@
 title: "Dashboard"
 layout: base.njk
 ---
-
 {% set items = mittagsplan.items%}
 
-<script src="/assets/dashboard.js"></script>
-<script src="/assets/wetter.js"></script>
+<script  type="module" src="/assets/apps/dashboard/dashboard.js"></script>
+{# <script src="/assets/wetter.js"></script> #}
 
 <div class="container">
     <div class="row">
