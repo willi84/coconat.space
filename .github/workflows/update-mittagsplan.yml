@@ -84,7 +84,7 @@ jobs:
               SUFFIX=" [bot]"
             fi
 
-            # Final commit message
+            # 🎉 Final commit message
             COMMIT_MESSAGE="update (mittagsplan): $LABEL on $TIME [$DATE]$CUSTOM$SUFFIX"
 
             git commit -m "$COMMIT_MESSAGE"
